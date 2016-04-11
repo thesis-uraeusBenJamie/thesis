@@ -39,10 +39,14 @@ module.exports = function(sequelize, DataTypes) {
     email: {
       type: DataTypes.BIGINT,
       allowNull: true
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     tableName: 'user',
     freezeTableName: true,
-    timestamps: true
+    timestamps: false
   });
 };
