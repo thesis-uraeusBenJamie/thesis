@@ -201,8 +201,7 @@ sequelize.sync().then(function(res) {
             .post(chatService.join);
         app.route('/createMSG')
             .post(chatService.createMSG);
-        app.route('/auth/google')
-            .post(userService.authenticate);
+        
 
         // server = app.listen(process.env.PORT || 1738, process.env.IP || "0.0.0.0", function() {
         //     var addr = server.address();
