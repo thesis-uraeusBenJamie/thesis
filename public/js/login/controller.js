@@ -51,6 +51,7 @@ angular.module('thesis.login', ['ngRoute'])
         })
         .catch(function(error) {
           if (error.error) {
+            console.log(error);
             // Popup error - invalid redirect_uri, pressed cancel button, etc.
             toastr.error(error.error);
           } else if (error.data) {
