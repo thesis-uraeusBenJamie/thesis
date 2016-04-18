@@ -11,11 +11,11 @@ angular.module('thesis.login', ['ngRoute'])
         if (email !== undefined && password !== undefined) {
           UserService.logIn(email, password).success(function(data) {
             // $rootScope.$broadcast('userLoggedIn');
-            toastr.info('You have successfully created a new account and have been signed-in');
+            toastr.info('Welcome Back!');
             $location.path("/profile");
 
           }).error(function(status, data) {
-             
+
           });
         }
 
