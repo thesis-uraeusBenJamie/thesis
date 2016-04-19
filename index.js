@@ -15,13 +15,15 @@ const
     bcrypt = require('bcrypt-nodejs'),
     crypto = require('crypto'),
     uuid = require('uuid'),
+    passport = require('passport'),
+    passportGoogle = require('passport-google-oauth'),
     config = require('./config.json'),
     cookieParser = require('cookie-parser'),
     sessionFileStore = require('session-file-store'),
     _ = require('lodash'),
     session = require('express-session');
 
-
+console.log(passport);
 let
     FileStore = sessionFileStore(session);
 
@@ -50,12 +52,16 @@ if (app.get('env') === 'production') {
 app
     .use(morgan('dev')) // logs request to the console
     .use(express.static(path.join(__dirname, 'public')))
+    .use(passport.initialize())
+    .use(passport.session())
     .use(session(sess))
     .use(cookieParser())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({
         extended: true
     }));
+
+
 
 // Uploading Images
 var uploading = multer({
@@ -86,6 +92,7 @@ const
     userService = require("./service/user.js")(sequelize),
     chatService = require("./service/chat.js")(sequelize);
 
+require('./config/passport')(passport, sequelize);
 var
     Chat = sequelize.import('./model/chatroom.js'),
     User = sequelize.import('./model/user.js'),
@@ -201,7 +208,14 @@ sequelize.sync().then(function(res) {
             .post(chatService.join);
         app.route('/createMSG')
             .post(chatService.createMSG);
-        app.route('/auth/googleAuth')
+
+         app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] })); 
+
+            app.get('/auth/google/callback',
+            passport.authenticate('google', {
+                successRedirect: '/profile',
+                failureRedirect: '/'
+            }));
 
         // server = app.listen(process.env.PORT || 1738, process.env.IP || "0.0.0.0", function() {
         //     var addr = server.address();

@@ -44,7 +44,7 @@ angular.module('thesis.login', ['ngRoute'])
         $location.path("/login");
       };
        $scope.authenticate = function(provider) {
-      $auth.authenticate(provider)
+      $auth.UserService.authenticate(provider)
         .then(function() {
           toastr.success('You have successfully signed in with ' + provider + '!');
           $location.path('/profile');
