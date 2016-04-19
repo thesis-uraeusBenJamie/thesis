@@ -79,10 +79,10 @@ module.exports.close = function() {
 };
 // sequelize initialization //
 // for heroku
-const sequelize = new Sequelize('postgres://uzjeoebhaoxwuk:IVuScu6q96OjaUvc_fJBb8GVJl@ec2-54-163-254-231.compute-1.amazonaws.com:5432/denten10cruhtj');
+// const sequelize = new Sequelize('postgres://uzjeoebhaoxwuk:IVuScu6q96OjaUvc_fJBb8GVJl@ec2-54-163-254-231.compute-1.amazonaws.com:5432/denten10cruhtj');
 // for local
 
-// const sequelize = new Sequelize('postgres://postgres:CODA1931@localhost:5433/postgres');
+const sequelize = new Sequelize('postgres://postgres:CODA1931@localhost:5433/postgres');
 
 
 // require userService files
@@ -208,7 +208,7 @@ sequelize.sync().then(function(res) {
             .post(chatService.join);
         app.route('/createMSG')
             .post(chatService.createMSG);
-<<<<<<< HEAD
+
 
          app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] })); 
 
@@ -217,11 +217,11 @@ sequelize.sync().then(function(res) {
                 successRedirect: '/profile',
                 failureRedirect: '/'
             }));
-||||||| abe2da6... 6
+
         app.route('/auth/googleAuth')
-=======
+
         
->>>>>>> parent of abe2da6... 6
+
 
         // server = app.listen(process.env.PORT || 1738, process.env.IP || "0.0.0.0", function() {
         //     var addr = server.address();
