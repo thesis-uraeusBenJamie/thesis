@@ -208,6 +208,7 @@ sequelize.sync().then(function(res) {
             .post(chatService.join);
         app.route('/createMSG')
             .post(chatService.createMSG);
+<<<<<<< HEAD
 
          app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] })); 
 
@@ -216,6 +217,11 @@ sequelize.sync().then(function(res) {
                 successRedirect: '/profile',
                 failureRedirect: '/'
             }));
+||||||| abe2da6... 6
+        app.route('/auth/googleAuth')
+=======
+        
+>>>>>>> parent of abe2da6... 6
 
         // server = app.listen(process.env.PORT || 1738, process.env.IP || "0.0.0.0", function() {
         //     var addr = server.address();

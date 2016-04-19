@@ -38,8 +38,13 @@
     "express": "^4.13.4",
     "express-mysql-session": "^1.0.0-rc.0",
     "express-session": "^1.13.0",
+<<<<<<< HEAD
     "express-stormpath": "^3.1.2",
     "jwt-simple": "^0.5.0",
+||||||| abe2da6... 6
+    "jwt-simple": "^0.5.0",
+=======
+>>>>>>> parent of abe2da6... 6
     "lodash": "^4.6.1",
     "morgan": "^1.7.0",
     "multer": "^1.1.0",
@@ -47,7 +52,6 @@
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
     "pg": "^4.5.3",
-    "request": "^2.72.0",
     "sequelize": "^3.19.3",
     "sequelize-cli": "^2.3.1",
     "session-file-store": "^0.2.0",
