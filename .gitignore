@@ -2,3 +2,6 @@
 config.json
 /public/bower_components/
 /session/
+/public/img/
+/public/video/
+/public/images/
