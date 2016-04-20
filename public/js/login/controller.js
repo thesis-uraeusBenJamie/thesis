@@ -12,6 +12,7 @@ angular.module('thesis.login', ['ngRoute'])
           UserService.logIn(email, password).success(function(data) {
             // $rootScope.$broadcast('userLoggedIn');
             toastr.info('Welcome Back!');
+            $cookies.get('id');
             $location.path("/profile");
 
           }).error(function(status, data) {
@@ -44,6 +45,7 @@ angular.module('thesis.login', ['ngRoute'])
         $location.path("/login");
       };
        $scope.authenticate = function(provider) {
+        if($cookies.get('id'))
       $auth.UserService.authenticate(provider)
         .then(function() {
           toastr.success('You have successfully signed in with ' + provider + '!');

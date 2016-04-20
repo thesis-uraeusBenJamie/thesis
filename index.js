@@ -16,7 +16,8 @@ const
     crypto = require('crypto'),
     uuid = require('uuid'),
     passport = require('passport'),
-    passportGoogle = require('passport-google-oauth'),
+    GoogleStrategy = require('passport-google-oauth'),
+    RememberMeStrategy = require('passport-remember-me'),
     config = require('./config.json'),
     cookieParser = require('cookie-parser'),
     sessionFileStore = require('session-file-store'),
@@ -54,6 +55,7 @@ app
     .use(express.static(path.join(__dirname, 'public')))
     .use(passport.initialize())
     .use(passport.session())
+    // .use(passport.authenticate('remmember-me'))
     .use(session(sess))
     .use(cookieParser())
     .use(bodyParser.json())
@@ -90,13 +92,15 @@ const sequelize = new Sequelize('postgres://postgres:CODA1931@localhost:5433/pos
 // const colorsService = require("./service/colors")(sequelize);
 const
     userService = require("./service/user.js")(sequelize),
-    chatService = require("./service/chat.js")(sequelize);
+    chatService = require("./service/chat.js")(sequelize),
+    twitterService = require("./service/twitter")(sequelize);
 
 require('./config/passport')(passport, sequelize);
 var
     Chat = sequelize.import('./model/chatroom.js'),
     User = sequelize.import('./model/user.js'),
     UserChat = sequelize.import('./model/userchatroomjct.js'),
+    Twitter = sequelize.import('./model/userTwitter.js'),
     Creds = sequelize.import('./model/credentials.js');
 
 io.on('connection', function(socket) {
@@ -194,6 +198,7 @@ sequelize.sync().then(function(res) {
         Chat.sync();
         User.sync();
         UserChat.sync();
+        Twitter.sync();
         Creds.sync();
 
         app.route('/logout')
@@ -208,13 +213,16 @@ sequelize.sync().then(function(res) {
             .post(chatService.join);
         app.route('/createMSG')
             .post(chatService.createMSG);
+         app.route('/user/:id/twitter')
+            .get(twitterService.get)
+            .post(twitterService.create);
+
 
 
          app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] })); 
-
             app.get('/auth/google/callback',
             passport.authenticate('google', {
-                successRedirect: '/profile',
+                successRedirect: '/#/profile',
                 failureRedirect: '/'
             }));
 

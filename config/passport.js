@@ -41,6 +41,16 @@ module.exports = function(passport, sequelize) {
             }).then(function(google) {
                 if(google) {
                     findGoogleUser(google.idUser).then(function(user) {
+              		var date = new Date();
+            	  var minutes = 30;
+            	  date.setTime(date.getTime() + (minutes * 60 * 1000));
+           		   res.cookie("name", user.dataValues.nameFirst, {
+           		     expires: date
+           		   });
+           		   res.cookie("id", user.dataValues.id, {
+           		     expires: date
+             	 });
+              res.redirect('/#/profile');
                         resolve(user);
                     });
                 } else {
@@ -71,12 +81,14 @@ module.exports = function(passport, sequelize) {
     passport.use(new GoogleStrategy({
         clientID: "583757200523-dkje7m5ih74iertghm19nl9ghp3b1irr.apps.googleusercontent.com",
         clientSecret: "7uenS8wDjG5gSsVGW_mscaHI",
-        callbackURL: "https://serene-sea-44966.herokuapp.com/auth/google/callback"
+        callbackURL: "http://127.0.0.1:1738/auth/google/callback"
     },
-    function(token, refreshToken, profile, done) {
+    function(res, token, refreshToken, profile, done) {
+    	console.log(res);
         
         // User.findOne won't fire until we have all our data back from Google
         process.nextTick(function() {
+        	
             Google.findOne({
               where: { idGoogle: profile.id }
             }).then(function(google) {
@@ -85,13 +97,14 @@ module.exports = function(passport, sequelize) {
                         done(null, user);
                     });
                 } else {
-                    User.build({
+                    User.create({
+                    	nameLast: profile.name.familyName,
+                    	nameFirst: profile.name.givenName,
                         username: profile.displayName,
                         email: profile.emails[0].value
                     })
-                    .save()
                     .then(function(user) {
-                        Google.build({
+                        Google.create({
                             idUser: user.id,
                             idGoogle: profile.id,
                             token: token,
@@ -99,9 +112,18 @@ module.exports = function(passport, sequelize) {
                             displayName: profile.displayName,
                             gmail: profile.emails[0].value
                         })
-                        .save()
                         .then(function(google) {
                             findGoogleUser(google.idUser).then(function(user) {
+            					var date = new Date();
+            					var minutes = 30;
+            					date.setTime(date.getTime() + (minutes * 60 * 1000));
+            					res.cookie("name", User.nameFirst, {
+              					expires: date
+            					});
+            					res.cookie("id", User.id, {
+              					expires: date
+            					});
+            					res.redirect('/#/profile');
                                 done(null, user);
                             });
                         }).catch(function(err) {
@@ -112,7 +134,7 @@ module.exports = function(passport, sequelize) {
             });
         });
     }));
-    
+
 };
 
 

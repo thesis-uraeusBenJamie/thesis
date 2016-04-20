@@ -59,8 +59,12 @@ var config = ['$routeProvider', '$locationProvider', '$authProvider',
     });
 
        $authProvider.twitter({
-      url: '/auth/twitter'
-    });
+  url: 'https://api.twitter.com/oauth/authorize',
+  authorizationEndpoint: 'https://api.twitter.com/oauth/authenticate',
+  redirectUri: window.location.origin,
+  type: '1.0',
+  popupOptions: { width: 495, height: 645 }
+});
 
        function skipIfLoggedIn($q, $auth) {
       var deferred = $q.defer();
