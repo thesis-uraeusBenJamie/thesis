@@ -19,5 +19,10 @@
         </label>
         <button ng-disabled="!user.email || !user.password" type="button" ng-click="login()" class="btn btn-lg btn-custom btn-block">Login</button>
     </form>
+    <form class="form-facebook-signin" name="facebookSigninForm" role="form">
+        <div class="form-group" ng-class="">
+            <a href="/auth/facebook">Login with Facebook</a>
+        </div>
+    </form>
 </div>
 </div>
