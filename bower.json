@@ -30,7 +30,13 @@
     "angular-toastr": "^1.7.0",
     "Ionicons": "ionicons#^2.0.1",
     "satellizer": "^0.14.0",
-    "bluebird": "^3.3.5"
+    "bluebird": "^3.3.5",
+    "components-font-awesome": "^4.5.0",
+    "font-awesome": "^4.6.1",
+    "angular-directive.g-signin": "^0.1.2",
+    "a0-angular-storage": "^0.0.15",
+    "auth0-angular": "^4.1.0",
+    "angular-jwt": "^0.0.9"
   },
   "resolutions": {
     "angular": ">=1.4.0"

@@ -1,9 +1,10 @@
 'use strict';
 
 let
- GoogleStrategy = require ('passport-google-oauth').OAuth2Strategy,
+ GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
+ FacebookStrategy = require('passport-facebook').Strategy,
  Promise = require('bluebird'),
- config = require('../config.json');
+ config = require('./auth.js');
 
 module.exports = function(passport, sequelize) {
     const
@@ -12,7 +13,7 @@ module.exports = function(passport, sequelize) {
         
     User.hasOne(Google, {foreignKey: 'idUser'});
     Google.belongsTo(User, {foreignKey: 'idUser'});
-        
+    
     function findGoogleUser(idUser) {
         return new Promise(function(resolve, reject){
             User.findOne({
@@ -35,21 +36,12 @@ module.exports = function(passport, sequelize) {
     }
     
     function findGoogleUserByGoogleId(idGoogle) {
-        return new Promise(function(resolve, reject){
+        return new Promise(function(res, resolve, reject){
             Google.findOne({
               where: { idGoogle: idGoogle }
             }).then(function(google) {
                 if(google) {
                     findGoogleUser(google.idUser).then(function(user) {
-              		var date = new Date();
-            	  var minutes = 30;
-            	  date.setTime(date.getTime() + (minutes * 60 * 1000));
-           		   res.cookie("name", user.dataValues.nameFirst, {
-           		     expires: date
-           		   });
-           		   res.cookie("id", user.dataValues.id, {
-           		     expires: date
-             	 });
               res.redirect('/#/profile');
                         resolve(user);
                     });
@@ -77,14 +69,35 @@ module.exports = function(passport, sequelize) {
             throw Error('No user found!');
         });
     });
-    
+    // passport.use(new FacebookStrategy({
+    //     clientID: configAuth.facebookAuth.clientID,
+    //     clientSecret: configAuth.facebookAuth.clientSecret,
+    //     callbackURL: configAuth.facebookAuth.callbackURL
+    // },
+    // function(token, refreshToken, profile, done){
+    //     process.nextTick(function(){
+    //         User.findOne({
+    //             where: {
+    //                 idFacebook: profile.id
+    //             }, function(err, user){
+    //                 if(err)
+    //                 return done(err);
+    //                 if(user)
+    //                     return done (null, user);
+    //                 else{
+    //                     var newFacebook = new User();
+    //                     newFacebook.id = profile.id;
+    //                                         }
+    //             }
+    //         });
+    //     })
+    // }))
     passport.use(new GoogleStrategy({
         clientID: "583757200523-dkje7m5ih74iertghm19nl9ghp3b1irr.apps.googleusercontent.com",
         clientSecret: "7uenS8wDjG5gSsVGW_mscaHI",
         callbackURL: "http://127.0.0.1:1738/auth/google/callback"
     },
-    function(res, token, refreshToken, profile, done) {
-    	console.log(res);
+    function(token, refreshToken, profile, done) {
         
         // User.findOne won't fire until we have all our data back from Google
         process.nextTick(function() {
@@ -114,17 +127,6 @@ module.exports = function(passport, sequelize) {
                         })
                         .then(function(google) {
                             findGoogleUser(google.idUser).then(function(user) {
-            					var date = new Date();
-            					var minutes = 30;
-            					date.setTime(date.getTime() + (minutes * 60 * 1000));
-            					res.cookie("name", User.nameFirst, {
-              					expires: date
-            					});
-            					res.cookie("id", User.id, {
-              					expires: date
-            					});
-            					res.redirect('/#/profile');
-                                done(null, user);
                             });
                         }).catch(function(err) {
                             throw err;
@@ -134,7 +136,6 @@ module.exports = function(passport, sequelize) {
             });
         });
     }));
-
 };
 
 

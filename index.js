@@ -95,6 +95,8 @@ const
     chatService = require("./service/chat.js")(sequelize),
     twitterService = require("./service/twitter")(sequelize);
 
+
+
 require('./config/passport')(passport, sequelize);
 var
     Chat = sequelize.import('./model/chatroom.js'),
@@ -220,13 +222,23 @@ sequelize.sync().then(function(res) {
 
 
          app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] })); 
+            
             app.get('/auth/google/callback',
             passport.authenticate('google', {
                 successRedirect: '/#/profile',
-                failureRedirect: '/'
+                failureRedirect: '/login'
             }));
 
-        app.route('/auth/googleAuth')
+        app.route('/auth/googleAuth');
+
+        app.get('/auth/facebook',
+         passport.authenticate('facebook'));
+
+        app.get('/auth/facebook/callback',
+         passport.authenticate('facebook', { 
+            successRedirect: '/#/profile',
+            failureRedirect: '/' }));
+   
 
         
 

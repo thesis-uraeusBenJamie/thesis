@@ -13,6 +13,10 @@ var config = ['$routeProvider', '$locationProvider', '$authProvider',
         controller: 'RegisterController',
         templateUrl: 'templates/home.html'
       })
+      .when('/register', {
+        controller: "RegisterController",
+        templateUrl: "templates/register.html"
+      })
       .when('/login', {
         controller: 'LoginController',
         templateUrl: 'templates/login.html',
@@ -42,10 +46,9 @@ var config = ['$routeProvider', '$locationProvider', '$authProvider',
       .otherwise({
         redirectTo: '/'
       });
-
-      $authProvider.google({
-     clientId: "583757200523-dkje7m5ih74iertghm19nl9ghp3b1irr.apps.googleusercontent.com"
-    });
+    //   $authProvider.google({
+    //  clientId: "583757200523-dkje7m5ih74iertghm19nl9ghp3b1irr.apps.googleusercontent.com"
+    // });
         $authProvider.oauth2({
       name: 'foursquare',
       url: '/auth/foursquare',

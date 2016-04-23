@@ -50,7 +50,7 @@
       border-radius: 10px;
       border: 1px solid black;
   }
-  .theForm {
+  /*.theForm {
       display: flex;
       align-content: flex-start;
       margin-bottom: 35px;
@@ -61,7 +61,7 @@
       margin-left: 50px;
       margin-right: 50px;
       margin-top: 23px;
-  }
+  }*/
   .formFlex {
       -moz-box-shadow: 3px 3px 5px 6px #ccc;
       -webkit-box-shadow: 3px 3px 5px 6px #ccc;
@@ -79,7 +79,7 @@
       margin-right: 00px;
       background-color: white;
   }
-  .form-profile {
+  .form-prole {
       -moz-box-shadow: 3px 3px 5px 6px #ccc;
       -webkit-box-shadow: 3px 3px 5px 6px #ccc;
       box-shadow: 3px 3px 5px 6px #ccc;
@@ -97,6 +97,7 @@
       background-color: white;
   }
   .formTitle {
+      
       color: #a5a7aa;
       font-size: 17px;
       font-weight: 600;
@@ -499,7 +500,5 @@
   background-color: #303030;
 }
 
-
-/*new page css*/
-
+Register CSS
 
