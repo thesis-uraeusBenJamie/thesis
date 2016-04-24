@@ -1,4 +1,5 @@
 <nav class="navbar navbar-default navbar-inverse" role="navigation" ng-controller="LoginController">
+   <a class="navbar-brand"><img class="main-icon" src="img/prattle_squirrel.jpg"></a>
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -23,9 +24,69 @@
         <li>
           <a  href="#/login" ng-click="logout()">Logout</a>
         </li>
+        <li>
+         <a class="page-scroll" data-toggle="modal" href="#aboutModal">About</a>
+        </li>
       </ul>
     </div>
     <!-- /.navbar-collapse -->
   </div>
   <!-- /.container-fluid -->
 </nav>
+ <div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+             <div class="row team section-head">
+
+        <div class="twelve-columns">
+             <h1>Meet Our Team<span>.</span></h1>
+             <h2>This is part of our "Thesis Project" for <a class="spark-link" href="https://operationspark.org">Operation Spark</a> in New Orleans.</h2>
+             <hr />          
+          </div>
+      </div> <!-- end section-head -->
+      <div class="row">
+         <div id="team-wrapper" class="bgrid-fourth s-bgrid-third tab-bgrid-half mob-bgrid-whole group">
+            <div class="bgrid member">
+                    <div class="member-pic">
+                        <img class="jamie" src="img/jamie-photo.jpg" alt=""/>
+                    <div class="mask"></div>        
+               </div>
+               <div class="member-name">
+                  <h3>Jamie</h3>
+                  <span>Scrum Lord and Beard Extraordinaire</span>
+               </div>
+
+               <p>Jamie is a freak of nature when it comes to his ability to grasp new programs quickly and live on a diet solely dedicated to meat and cheese. </p>
+            </div> <!-- end member -->
+            <div class="bgrid member">                   
+                    <div class="member-pic">
+                  <img class="uraeus" src="img/rayman.jpeg" alt=""/>
+                <div class="mask"></div>  
+               </div>
+               <div class="member-name">
+                  <h3>Uraeus</h3>
+                  <span>Co-Designer</span>
+               </div>
+               <p>Uraeus is solely responsible for the Operation Spark Nerf Gun wars of 2016. </p>
+            </div> <!-- end member -->
+            <div class="bgrid member">                   
+                    <div class="member-pic">
+                        <img class="bernhard" src="img/moi.jpeg" alt=""/>
+                    <div class="mask"></div>                            
+               </div>
+               <div class="member-name">
+                  <h3>Bernhard</h3>
+                  <span>Designer</span>
+               </div>
+               <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor,
+               nisi elit consequat ipsum, nec sagittis sem nibh id elit. </p>
+                </div> <!-- end member -->
+            </div> <!-- end member -->
+         </div> <!-- end team-wrapper -->
+      </div> <!-- end row -->
+            <br/>
+            <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true"> OK </button>
+          </div>
+        </div>
+        </div>

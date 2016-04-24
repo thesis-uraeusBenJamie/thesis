@@ -1,4 +1,7 @@
 /node_modules/
 config.json
 /public/bower_components/
-/session/
+/sessions/
+/public/img/
+/public/video/
+/public/images/

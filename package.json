@@ -29,6 +29,7 @@
   "dependencies": {
     "angular-emoji-filter-hd": "0.0.9",
     "bcrypt-nodejs": "0.0.3",
+    "bluebird": "^3.3.5",
     "body-parser": "^1.15.0",
     "bower": "1.7.9",
     "cookie-parser": "^1.4.1",
@@ -37,15 +38,23 @@
     "express": "^4.13.4",
     "express-mysql-session": "^1.0.0-rc.0",
     "express-session": "^1.13.0",
+    "express-stormpath": "^3.1.2",
+    "flickrapi": "^0.4.2",
+    "jwt-simple": "^0.5.0",
     "lodash": "^4.6.1",
     "morgan": "^1.7.0",
     "multer": "^1.1.0",
     "mysql": "^2.10.2",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.0",
+    "passport-google-oauth": "^1.0.0",
+    "passport-remember-me": "0.0.1",
     "pg": "^4.5.3",
     "sequelize": "^3.19.3",
     "sequelize-cli": "^2.3.1",
     "session-file-store": "^0.2.0",
     "socket.io": "^1.4.5",
+    "twitter": "^1.2.5",
     "uuid": "^2.0.1"
   }
 }

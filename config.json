@@ -19,5 +19,14 @@
     "database": "thesis",
     "host": "ec2-54-163-254-231.compute-1.amazonaws.com",
     "dialect": "postgres"
-  }
+  },
+    "google": {
+      "clientId": "583757200523-dkje7m5ih74iertghm19nl9ghp3b1irr.apps.googleusercontent.com",
+      "clientSecret": "7uenS8wDjG5gSsVGW_mscaHI",
+      "callbackUrl": "http://127.0.0.1:1738/auth/google/callback"
+    },
+    "flickr" : {
+    "clientID" : "d3e027a32ddf1e2a22ef946adfa920e2",
+    "clientSecret" : "0aad812c20cf6667" 
+  }    
 }

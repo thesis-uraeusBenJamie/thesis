@@ -15,13 +15,16 @@ const
     bcrypt = require('bcrypt-nodejs'),
     crypto = require('crypto'),
     uuid = require('uuid'),
+    passport = require('passport'),
+    GoogleStrategy = require('passport-google-oauth'),
+    RememberMeStrategy = require('passport-remember-me'),
     config = require('./config.json'),
     cookieParser = require('cookie-parser'),
     sessionFileStore = require('session-file-store'),
     _ = require('lodash'),
     session = require('express-session');
 
-
+console.log(passport);
 let
     FileStore = sessionFileStore(session);
 
@@ -50,12 +53,17 @@ if (app.get('env') === 'production') {
 app
     .use(morgan('dev')) // logs request to the console
     .use(express.static(path.join(__dirname, 'public')))
+    .use(passport.initialize())
+    .use(passport.session())
+    // .use(passport.authenticate('remmember-me'))
     .use(session(sess))
     .use(cookieParser())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({
         extended: true
     }));
+
+
 
 // Uploading Images
 var uploading = multer({
@@ -75,19 +83,26 @@ module.exports.close = function() {
 // for heroku
 // const sequelize = new Sequelize('postgres://uzjeoebhaoxwuk:IVuScu6q96OjaUvc_fJBb8GVJl@ec2-54-163-254-231.compute-1.amazonaws.com:5432/denten10cruhtj');
 // for local
-const sequelize = new Sequelize('postgres://postgres:admin@localhost:3000/postgres');
+
+const sequelize = new Sequelize('postgres://postgres:CODA1931@localhost:5433/postgres');
+
 
 // require userService files
 // example
 // const colorsService = require("./service/colors")(sequelize);
 const
     userService = require("./service/user.js")(sequelize),
-    chatService = require("./service/chat.js")(sequelize);
+    chatService = require("./service/chat.js")(sequelize),
+    twitterService = require("./service/twitter")(sequelize);
 
+
+
+require('./config/passport')(passport, sequelize);
 var
     Chat = sequelize.import('./model/chatroom.js'),
     User = sequelize.import('./model/user.js'),
     UserChat = sequelize.import('./model/userchatroomjct.js'),
+    Twitter = sequelize.import('./model/userTwitter.js'),
     Creds = sequelize.import('./model/credentials.js');
 
 io.on('connection', function(socket) {
@@ -185,6 +200,7 @@ sequelize.sync().then(function(res) {
         Chat.sync();
         User.sync();
         UserChat.sync();
+        Twitter.sync();
         Creds.sync();
 
         app.route('/logout')
@@ -199,6 +215,33 @@ sequelize.sync().then(function(res) {
             .post(chatService.join);
         app.route('/createMSG')
             .post(chatService.createMSG);
+         app.route('/user/:id/twitter')
+            .get(twitterService.get)
+            .post(twitterService.create);
+
+
+
+         app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] })); 
+            
+            app.get('/auth/google/callback',
+            passport.authenticate('google', {
+                successRedirect: '/#/profile',
+                failureRedirect: '/login'
+            }));
+
+        app.route('/auth/googleAuth');
+
+        app.get('/auth/facebook',
+         passport.authenticate('facebook'));
+
+        app.get('/auth/facebook/callback',
+         passport.authenticate('facebook', { 
+            successRedirect: '/#/profile',
+            failureRedirect: '/' }));
+   
+
+        
+
 
         // server = app.listen(process.env.PORT || 1738, process.env.IP || "0.0.0.0", function() {
         //     var addr = server.address();

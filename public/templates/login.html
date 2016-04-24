@@ -1,8 +1,17 @@
-<div class="formFlex">
-  <img class="homeImg" src="http://joost.vunderink.net/blog/wp-content/uploads/2013/11/groupchat.jpeg"/>
-<div class="theForm">
-  <h2 align="center"> Thesis Project </h2>
-    <p class="formTitle">Login to check-in and chat with others.</p>
+ <body>
+<ng-include src="'/templates/homeNavbar.html'"></ng-include>
+<div class="vid-container">
+  <video id="Video1" class="bgvid back" autoplay="false" muted="muted" preload="auto" loop>
+      <source src="/video/login-video.mp4" type="video/mp4">
+      <source src="/video/driving.mp4" type="video/mp4">
+  </video>
+  <div class="inner-container">
+    <!-- <video id="Video2" class="bgvid inner" autoplay="false" muted="muted" preload="auto" loop>
+      <source src="/video/fireworks.mp4" type="video/mp4">
+    </video> -->
+   <div class="theForm">
+  <h2 align="center"> Prattle! </h2>
+    <p class="formTitle"> What took you so long? Come in and join the fun.</p>
     <form class="form-signin" name="signinForm" role="form">
         <div class="form-group" ng-class="{ 'has-error' : signinForm.email.$invalid }">
             <label>Email</label>
@@ -15,9 +24,19 @@
             <p class="help-block" ng-show="signinForm.password.$error.minlength">Min password length is 8 characters.</p>
         </div>
         <label class="checkbox">
-          Don't have a account? <a href="#/"> Sign Up</a>
+          Don't have a account? <a href="#/register"> Sign Up</a>
         </label>
         <button ng-disabled="!user.email || !user.password" type="button" ng-click="login()" class="btn btn-lg btn-custom btn-block">Login</button>
+        <h6 class='text'>or</h6>
+        <!-- <button class="btn btn-block btn-google-plus" ng-click="authenticate('google')"><span class="ion-social-googleplus:before"></span>Sign in with Google</button> -->
+        <a href="/auth/google" class="btn btn-block btn-google-plus"><i class="fa fa-google-plus" aria-hidden="true"></i> Sign in with Google</a>
+        <a href="/user/:id/twitter" class="btn btn-block btn-twitter" ng-click="authenticate('twitter')"><i class="fa fa-twitter" aria-hidden="true"></i> Sign in with Twitter</a>
+        <!-- login.tpl.html -->
+        <!-- ... -->
+        <!-- <input type="submit" ng-controller="GoogleCtrl" ng-click="auth.signin()" /> -->
+        <!-- ... -->
     </form>
+  </div>
 </div>
-</div>
+</body>
+
