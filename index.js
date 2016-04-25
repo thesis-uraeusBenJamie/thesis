@@ -93,8 +93,8 @@ var
     Chat = sequelize.import('./model/chatroom.js'),
     User = sequelize.import('./model/user.js'),
     UserChat = sequelize.import('./model/userchatroomjct.js'),
-    Creds = sequelize.import('./model/credentials.js');
-    // Facebook = sequelize.import('./model/facebook.js');
+    Creds = sequelize.import('./model/credentials.js'),
+    Facebook = sequelize.import('./model/facebook.js');
 
 
  
@@ -198,7 +198,7 @@ sequelize.sync().then(function(res) {
         User.sync();
         UserChat.sync();
         Creds.sync();
-        // Facebook.sync();
+        Facebook.sync();
 
         app.route('/logout')
             .get(userService.logout);
