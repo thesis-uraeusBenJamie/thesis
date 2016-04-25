@@ -1,67 +1,16 @@
-var localStrategy = require('passport-local').Strategy;
 var User = require('../thesis/model/user');
 var configAuth = require('./auth');
+var passport =  require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
+// var Model = require('../thesis/model/facebook');
 
 module.exports = function(passport) {
-	passport.serializeUser(function(user,done) {
-		done(null, user.id);
-	});
-
-	passport.deserializeUser(function(id, done) {
-		User.findbyId(id, function(err, user) {
-			done(err, user);
-		});
-	});
-
-	passport.use('local-signup', new LocalStrategy ({
-		usernameField: 'email',
-		passwordField: 'password',
-		passReqToCallback: true
-	}, 
-	function (req, email, password, done) {
-		process.nextTick(function() {
-			User.findOne({'local.username': email}, function (err, user) {
-				if(err) { return done(err); }
-				if(user) {
-					return done(null, false, req.flash('signupMessage', 'That email has already been taken'));
-				} else {
-					var newUser = new User();
-					newUser.local.username = email;
-					newUser.local.password = newUser.generateHash(password);
-					newUser.save(function(err) {
-						if(err) { throw err; } return done(null, newUser);
-					})
-				}
-			})
-		});
-	}));
-
-	passport.use('local-login', new LocalStrategy({
-		usernameField: 'email',
-		passwordField: 'password',
-		passReqToCallback: true
-	}, function (req, email, password, done) {
-		process.nextTick(function() {
-			User.findOne({'local.username': email}, function (err, user) {
-				if(err) { return done(err); }
-				if(!user) {
-					return done(null, false, req.flash('loginMessage', 'invalid credentials'));
-				} 
-				if(user.validPassword(password)) {
-					return done(null, false, req.flash('loginMessage', 'invalid credentials'));
-				}
-				return done(null, user);
-			});
-		});
-	   }
-	});
-
-
-	passport.use(new FacebookStrategy({
+	app.use(passport.initialize());
+	app.use(passport.session());
+	passport.use('facebook', new FacebookStrategy({
     	clientID: configAuth.facebookAuth.clientID,
     	clientSecret: configAuth.facebookAuth.clientSecret,
-    	comallbackURL: configAuth.facebookAuth.comallbackURL
+    	callbackURL: configAuth.facebookAuth.callbackURL
   	 },
   	 function(accessToken, refreshToken, profile, done) {
     	process.nextTick(function() {
@@ -85,4 +34,15 @@ module.exports = function(passport) {
     	})
   	 }
 	));
+
+	
+	passport.serializeUser(function(user, done) {
+		done(null, user.id);
+	});
+
+	passport.deserializeUser(function(id, done) {
+		User.findbyId(id, function(err, user) {
+			done(err, user);
+		});
+	});
 }

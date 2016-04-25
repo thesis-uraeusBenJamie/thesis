@@ -21,7 +21,8 @@ const
     _ = require('lodash'),
     session = require('express-session'),
     passport = require('passport'),
-    FacebookStrategy =  require('passport-facebook').Strategy;
+    FacebookStrategy = require('passport-facebook').Strategy;
+    // Passport = require('passport.js')('passport');
 
 
 let
@@ -54,6 +55,8 @@ app
     .use(express.static(path.join(__dirname, 'public')))
     .use(session(sess))
     .use(cookieParser())
+    .use(passport.initialize())
+    .use(passport.session())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({
         extended: true
@@ -91,37 +94,10 @@ var
     User = sequelize.import('./model/user.js'),
     UserChat = sequelize.import('./model/userchatroomjct.js'),
     Creds = sequelize.import('./model/credentials.js');
+    // Facebook = sequelize.import('./model/facebook.js');
 
 
-// passport.use(new FacebookStrategy({
-//     clientID: FACEBOOK_APP_ID,
-//     clientSecret: FACEBOOK_APP_SECRET,
-//     callbackURL: "http://localhost/auth/facebook/callback"
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-//     User.findOrCreate(..., function(err, user) {
-//       if (err) { return done(err); }
-//       done(null, user);
-//     });
-//   }
-// ));
-
-// FACEBOOK SDK
-// window.fbAsyncInit = function() {
-//     FB.init({
-//       appId      : '1173846955981899',
-//       xfbml      : true,
-//       version    : 'v2.6'
-//     });
-//   };
-
-//   (function(d, s, id){
-//      var js, fjs = d.getElementsByTagName(s)[0];
-//      if (d.getElementById(id)) {return;}
-//      js = d.createElement(s); js.id = id;
-//      js.src = "//connect.facebook.net/en_US/sdk.js";
-//      fjs.parentNode.insertBefore(js, fjs);
-//    }(document, 'script', 'facebook-jssdk'));
+ 
 
 
   
@@ -222,6 +198,7 @@ sequelize.sync().then(function(res) {
         User.sync();
         UserChat.sync();
         Creds.sync();
+        // Facebook.sync();
 
         app.route('/logout')
             .get(userService.logout);
@@ -236,10 +213,10 @@ sequelize.sync().then(function(res) {
         app.route('/createMSG')
             .post(chatService.createMSG);
         // Facebook Auth 
-        app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'read_stream', 'publish_actions']}));
+        app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email', 'profile']}));
         app.get('/auth/facebook/callback',
-            passport.authenticate('facebook', { successRedirect: '/',
-                                      failureRedirect: '/login' }));
+            passport.authenticate('facebook', { successRedirect: '/profile',
+                                      failureRedirect: '/' }));
 
         // server = app.listen(process.env.PORT || 1738, process.env.IP || "0.0.0.0", function() {
         //     var addr = server.address();

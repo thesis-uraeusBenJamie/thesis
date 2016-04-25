@@ -33,12 +33,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: true
     }
-    // facebook: {
-    //   id: DataTypes.STRING,
-    //   email: DataTypes.STRING,
-    //   token: DataTypes.STRING,
-    //   name: DataTypes.STRING
-    // }
   }, {
     tableName: 'user',
     freezeTableName: true,
