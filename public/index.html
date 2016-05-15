@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="thesis" id="top">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,19 +12,18 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/app.css" />
     <link rel="stylesheet" href="css/toastr.css" />
-    <link rel="stylesheet" href="css/home.css"/>
-    <link rel="stylesheet" href="css/register.css"/>
-     <link rel="icon" href="img/prattle_squirrel.jpg">
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/register.css" />
+    <link rel="icon" href="img/prattle_squirrel.jpg">
     <link href="https://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
     <link href="./bower_components/angular-emoji/dist/emoji.min.css" rel="stylesheet">
-
 </head>
-<body>
-<!-- <ng-include src="'/templates/navbar.html'"></ng-include> -->
 
+<body>
+    <!-- <ng-include src="'/templates/navbar.html'"></ng-include> -->
     <main ng-view></main>
-  <!-- /.container -->
-  </div>
+    <!-- /.container -->
+    </div>
     <!-- /.main -->
     <footer class="footer">
     </footer>
@@ -39,6 +39,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-cookies.min.js"></script>
     <script src="https://cdn.rawgit.com/Luegg/angularjs-scroll-glue/master/src/scrollglue.js"></script>
     <script src="./bower_components/angular-emoji/dist/emoji.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
+    <script src="bower_components/auth0-angular/build/auth0-angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="./bower_components/angular-strap/dist/angular-strap.min.js"></script>
     <script src="./bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
     <link href="./bower_components/angular-emoji-picker/dist/css/emoji-picker.css" rel="stylesheet">
@@ -58,10 +64,10 @@
     <script src="js/foursquare/controller.js"></script>
     <script src="js/chatroom/controller.js"></script>
     <script src="bower_components/satellizer/satellizer.js"></script>
-  <!-- <script src="js/user/factory.js"></script>
+    <!-- <script src="js/user/factory.js"></script>
   <script src="js/navbar/sideNavBar/controller.js"></script>
   <script src="js/navbar/controller.js"></script>
-  <script src="js/user/profile/controller.js"></script> --> 
+  <script src="js/user/profile/controller.js"></script> -->
 </body>
 
 </html>

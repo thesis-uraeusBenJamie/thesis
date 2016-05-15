@@ -6,6 +6,8 @@ const
     express = require('express'),
     app = express(),
     path = require('path'),
+    jwt = require('express-jwt'),
+    cors = require('cors'),
     bodyParser = require('body-parser'),
     morgan = require('morgan'),
     http = require('http').Server(app),
@@ -13,6 +15,7 @@ const
     multer = require('multer'),
     Sequelize = require('sequelize'),
     bcrypt = require('bcrypt-nodejs'),
+    flash = require('connect-flash'),
     crypto = require('crypto'),
     uuid = require('uuid'),
     passport = require('passport'),
@@ -35,7 +38,7 @@ var sess = {
     genId: function(req) {
         return uuid.v4();
     },
-    name: 'thesis-sessions',
+    name: 'session',
     secret: uuid.v4(),
     saveUnitialized: true,
     resave: true,
@@ -51,18 +54,25 @@ if (app.get('env') === 'production') {
 }
 
 app
+    .use(cors())
     .use(morgan('dev')) // logs request to the console
     .use(express.static(path.join(__dirname, 'public')))
-    .use(passport.initialize())
-    .use(passport.session())
     // .use(passport.authenticate('remmember-me'))
     .use(session(sess))
     .use(cookieParser())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({
         extended: true
-    }));
-
+    }))
+    .use(passport.initialize())
+    .use(passport.session())
+    .use(flash());
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+    next();
+});
 
 
 // Uploading Images
@@ -183,11 +193,11 @@ io.on('connection', function(socket) {
                         idChatroom: data.idChatroom
                     }
                 }).then(function(deletedChat) {
-                  UserChat.destroy({
-                      where: {
-                          idUser: data.idUser
-                      }
-                  });
+                    UserChat.destroy({
+                        where: {
+                            idUser: data.idUser
+                        }
+                    });
                 });
             });
         }
@@ -215,39 +225,44 @@ sequelize.sync().then(function(res) {
             .post(chatService.join);
         app.route('/createMSG')
             .post(chatService.createMSG);
-         app.route('/user/:id/twitter')
+        app.route('/user/:id/twitter')
             .get(twitterService.get)
             .post(twitterService.create);
 
 
 
-         app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] })); 
-            
-            app.get('/auth/google/callback',
-            passport.authenticate('google', {
-                successRedirect: '/#/profile',
-                failureRedirect: '/login'
-            }));
+        app.get('/auth/google',  passport.authenticate('google', { scope: ['profile', 'email'] }, { session: true }));
 
-        app.route('/auth/googleAuth');
+        app.get('/auth/google/callback', passport.authenticate('google', {
+            successRedirect: '/#/profile',
+            failureRedirect: '/#/login',
+            function(req, res) {
+                console.log(req.session);
+                req.session.passport;
+            }
+
+        }));
+
+        // app.route('/auth/googleAuth');
 
         app.get('/auth/facebook',
-         passport.authenticate('facebook'));
+            passport.authenticate('facebook'));
 
         app.get('/auth/facebook/callback',
-         passport.authenticate('facebook', { 
-            successRedirect: '/#/profile',
-            failureRedirect: '/' }));
-   
+            passport.authenticate('facebook', {
+                successRedirect: '/#/profile',
+                failureRedirect: '/#/login'
+            }));
 
-        
+
+
 
 
         // server = app.listen(process.env.PORT || 1738, process.env.IP || "0.0.0.0", function() {
         //     var addr = server.address();
         //     console.log("Server listening at", addr.address + ":" + addr.port);
         // });
-        server = http.listen(process.env.PORT || 1738, process.env.IP || "0.0.0.0", function() {
+        server = http.listen(process.env.PORT || 1738, process.env.IP || "127.0.0.1", function() {
             var addr = server.address();
             console.log("Server listening at", addr.address + ":" + addr.port);
 

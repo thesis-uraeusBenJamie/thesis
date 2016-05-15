@@ -19,7 +19,7 @@
       width: 450px;
   }
   .foursq {
-      margin-left: 500px;
+      margin-left: 140px;
   }
   .venueBox {
       height: 300px;
@@ -37,7 +37,7 @@
       margin: 0 0 10px 0;
   }
   .theVenue {
-      margin-left: 10px;
+      margin-left: 80px;
   }
   .homeImg {
       margin-left: 50px;
@@ -499,6 +499,22 @@
   color: #fff;
   background-color: #303030;
 }
-
+.gravatarSpan {
+  font-size: 30px;
+  color: white;
+}
+label{
+  color: white;
+}
+br.gravitar{
+  color: white;
+}
 Register CSS
 
+CHECKIN CSS
+.checkinBody {
+  background-image: url('./img/skyline.jpg');
+}
+h2.profile {
+  color: white;
+}

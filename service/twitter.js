@@ -50,7 +50,7 @@ module.exports = function(sequelize) {
     get: function(req, res) {
       User.findOne({
         where: {
-          id: id
+          id: req.params.id
         },
       }).then(function(user) {
         if (user) {

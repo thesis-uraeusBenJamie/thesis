@@ -1,9 +1,9 @@
 angular.module('thesis.chatroom', ['luegg.directives', 'emoji', 'vkEmojiPicker', 'mgcrea.ngStrap'])
 
-.controller('ChatroomController', ['$scope', '$location', '$window', '$cookies', '$rootScope', '$http', 'UserService', 'chatSocket',
-    function AdminUserCtrl($scope, $location, $window, $cookies, $rootScope, $http, UserService, chatSocket) {
+.controller('ChatroomController', ['$scope', '$location', '$window', '$cookies', '$rootScope', '$http', 'UserService', 'chatSocket', 'toastr',
+    function AdminUserCtrl($scope, $location, $window, $cookies, $rootScope, $http, UserService, chatSocket, toastr) {
         if (!$cookies.get('id')) {
-            $location.path("/login");
+            $location.path("/login");        
         } else {
             $scope.users = [];
             $scope.messages = [];

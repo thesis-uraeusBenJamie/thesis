@@ -10,8 +10,15 @@ body {
 
 body {
     font-family: 'Questrial','Helvetica Neue',Arial,sans-serif;
-    background-color: #282828;
-    color: #d3d3d3;
+    background: url(http://cdn1.matadornetwork.com/blogs/1/2014/05/04-3.jpg);
+    /*position: fixed;*/
+    width: cover;
+    height: all;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover; /* For WebKit*/
+    -moz-background-size: cover;    /* Mozilla*/
+    -o-background-size: cover;
+    background-size: cover;
     webkit-tap-highlight-color: #222;
 }
 
@@ -38,6 +45,10 @@ a:hover,
 a:focus {
     color: #9c27c1;
     outline: 0;
+}
+ul {
+    margin-right: 0px;
+    margin-left: 50px;
 }
 
 h1,h2,h3,h4,h5,h6 {

@@ -1,19 +1,22 @@
+<body class='profile'>
 <ng-include src="'/templates/navbar.html'"></ng-include>
 
-<div class="form-profile" ng-controller="EditProfileController">
-    <h2 align="center">Edit Profile</h2>
-    <form class="form-signin" name="regForm" enctype="multipart/form-data">
-        <label>Gravatar Email: (optional)</label>
+<div class="form-editProfile" ng-controller="EditProfileController" ng-style='profileImage'>
+    <!-- <h2 class='profile' align="center">Edit Profile</h2> -->
+    <form class="form-editProfile" name="regForm" enctype="multipart/form-data">
+        <span class="gravatarSpan">Welcome Back! {{auth.profile.nickname}}</span>
         <br />
         <br />
-        <label>Upload Profile Picture With Gravatar</label>
+        <label>Insert Gravatar Email to upload your Gravatar Profile Picture: (optional)</label>
+        <br />
         <br />
         <input type="email" name="gravEmail" class="form-control" ng-model="user.gravEmail"></input>
         <br />
         <br />
         <label>Upload your product picture here:</label>
         <br />
-        <br /> Single Image with validations
+        <label>Single image with validators</label>
+        <br /> 
         <br />
         <br />
         <button class="default-btn" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100" ngf-resize="{width: 100, height: 100}">Choose Image</button>
@@ -29,7 +32,9 @@
         <textarea name="desc" class="form-control" ng-model="user.desc"></textarea>
         <br />
         <button type="button" ng-disabled="!user.nameFirst || !user.nameLast || !user.desc" ng-click="submit()" class="btn btn-lg btn-custom btn-block">Update Profile</button>
+        <a type='button'  href='#/foursquare' class="btn btn-lg btn-custom btn-block">Prattle AWAY! </a>
     </form>
 </div>
+</body>
 
   

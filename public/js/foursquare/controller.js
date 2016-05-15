@@ -1,7 +1,7 @@
 angular.module('thesis.foursquare', ['ngRoute'])
 
-.controller('CheckinController', ['$scope', '$location', '$window', '$cookies', '$rootScope', '$http', 'UserService',
-    function checkInCtrl($scope, $location, $window, $cookies, $rootScope, $http, UserService) {
+.controller('CheckinController', ['$scope', '$location', '$window', '$cookies', '$rootScope', '$http', 'UserService', 'toastr',
+    function checkInCtrl($scope, $location, $window, $cookies, $rootScope, $http, UserService, toastr) {
         if (!$cookies.get('id')) {
             $location.path("/login");
         } else {
@@ -56,12 +56,15 @@ angular.module('thesis.foursquare', ['ngRoute'])
                     });
                     UserService.joinchat(id).success(function(data) {
                         $location.path("/chatroom");
+                        toastr.info("LET'S DO THIS!")
                     });
                 } else {
                     $location.path("/login");
                 }
             };
-
+            // $scope.profileImage = {
+            //     background: 'url(../img/skyline.jpg)'
+            // };
         }
     }
 ]);
